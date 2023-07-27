@@ -7,32 +7,39 @@ import cv2
 import torch
 import torchvision
 import PIL
+
 # import pyautogui
 import numpy as np
 import torchvision.transforms as transforms
 from utils import preprocess
 import torch.nn.functional as F
 
+
 def left():
     # pyautogui.hotkey('ctrl', 'shift', 'tab')
     print("Tab switched Left.")
 
-#switch right
+
+# switch right
 def right():
     # pyautogui.hotkey('ctrl', 'tab')
     print("Switch tab Right")
 
-#open tab
+
+# open tab
 def open():
     # pyautogui.hotkey('ctrl', 't')
     print("New tab opened.")
+
 
 def close():
     # pyautogui.hotkey('ctrl', 'w')
     print("Tab closed.")
 
+
 def none():
     print("N/A")
+
 
 TASK = "tabs"
 
@@ -104,6 +111,7 @@ def live(model, camera):
     # time.sleep(10)
     return prediction_value
 
+
 t_end = datetime.datetime.now() + datetime.timedelta(seconds=100)
 print("end time: ", t_end)
 
@@ -117,12 +125,19 @@ fake_camera = FakeCamera()
 # DATA_DIR = "nvdli-data/classification/tabs_B/"
 DATA_DIR = "images/"
 
-images = ["close-1.jpg", "close-2.jpg", "left-1.jpg", "left-2.jpg", "open-1.jpg", "open-2.jpg"]
+images = [
+    "close-1.jpg",
+    "close-2.jpg",
+    "left-1.jpg",
+    "left-2.jpg",
+    "open-1.jpg",
+    "open-2.jpg",
+]
 # for category in CATEGORIES:
 #     files = [DATA_DIR + category + "/" + i for i in os.listdir(DATA_DIR + category) if i.endswith(".jpg")]
 #     random.shuffle(files)
 #     images += files
-    
+
 error_count = 0
 for image in images:
     # print("image:", image)

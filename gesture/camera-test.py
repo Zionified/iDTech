@@ -2,30 +2,37 @@ from jetcam.usb_camera import USBCamera
 from jetcam.csi_camera import CSICamera
 import pyautogui
 
+
 def left():
-    pyautogui.hotkey('ctrl', 'shift', 'tab')
+    pyautogui.hotkey("ctrl", "shift", "tab")
     print("Tab switched Left.")
 
-#switch right
+
+# switch right
 def right():
-    pyautogui.hotkey('ctrl', 'tab')
+    pyautogui.hotkey("ctrl", "tab")
     print("Switch tab Right")
 
-#open tab
+
+# open tab
 def open():
-    pyautogui.hotkey('ctrl', 't')
+    pyautogui.hotkey("ctrl", "t")
     print("New tab opened.")
 
+
 def close():
-    pyautogui.hotkey('ctrl', 'w')
+    pyautogui.hotkey("ctrl", "w")
     print("Tab closed.")
+
 
 def none():
     print("N/A")
 
 
 # for USB Camera (Logitech C270 webcam), uncomment the following line
-camera = USBCamera(width=640, height=480, capture_device=0) # confirm the capture_device number
+camera = USBCamera(
+    width=640, height=480, capture_device=0
+)  # confirm the capture_device number
 
 # for CSI Camera (Raspberry Pi Camera Module V2), uncomment the following line
 # camera = CSICamera(width=224, height=224, capture_device=0) # confirm the capture_device number
@@ -40,29 +47,31 @@ from dataset import ImageClassificationDataset
 # TASK = 'emotions'
 # TASK = 'fingers'
 # TASK = 'diy'
-TASK = 'tabs'
+TASK = "tabs"
 
 # CATEGORIES = ['thumbs_up', 'thumbs_down']
 # CATEGORIES = ['none', 'happy', 'sad', 'angry']
 # CATEGORIES = ['1', '2', '3', '4', '5']
 # CATEGORIES = [ 'diy_1', 'diy_2', 'diy_3']
-CATEGORIES = ['close', 'open', 'left', 'right']
+CATEGORIES = ["close", "open", "left", "right"]
 
 # DATASETS = ['A', 'B']
 # DATASETS = ['A', 'B', 'C']
-DATASETS = ['A', 'B', 'C', 'D']
+DATASETS = ["A", "B", "C", "D"]
 
-TRANSFORMS = transforms.Compose([
-    transforms.ColorJitter(0.2, 0.2, 0.2, 0.2),
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-    transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-])
+TRANSFORMS = transforms.Compose(
+    [
+        transforms.ColorJitter(0.2, 0.2, 0.2, 0.2),
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]),
+    ]
+)
 
 # datasets = {}
 # for name in DATASETS:
 #     datasets[name] = ImageClassificationDataset('../data/classification/' + TASK + '_' + name, CATEGORIES, TRANSFORMS)
-    
+
 print("{} task with {} categories defined".format(TASK, CATEGORIES))
 
 # ================ Load Models ============================
@@ -70,15 +79,15 @@ import torch
 import torchvision
 
 CATEGORY_LEN = 4
-MODEL_PATH = 'models/gesture-resnet18-29-1.0000-0.9812.pth'
+MODEL_PATH = "models/gesture-resnet18-29-1.0000-0.9812.pth"
 print("loading model ", MODEL_PATH)
 
-device = torch.device('cuda')    #.device(0)
+device = torch.device("cuda")  # .device(0)
 
 # RESNET 18
 model = torchvision.models.resnet18(pretrained=True)
 model.fc = torch.nn.Linear(512, CATEGORY_LEN)
-#print(type(model))
+# print(type(model))
 
 
 # model = torch.load(MODEL_PATH, map_location=device)
@@ -86,8 +95,8 @@ model.fc = torch.nn.Linear(512, CATEGORY_LEN)
 model.load_state_dict(torch.load(MODEL_PATH))
 model = model.to(device)
 # print(type(model))
-#model = model.to(device)
-#or: model = torch.load(MODEL_PATH, map_location=device) as given by chatgpt
+# model = model.to(device)
+# or: model = torch.load(MODEL_PATH, map_location=device) as given by chatgpt
 
 # display(model_widget)
 print("model configured and model_widget created")
@@ -101,8 +110,9 @@ import torch.nn.functional as F
 import cv2
 import numpy as np
 
-CATEGORIES = ['close', 'open', 'left', 'right']
+CATEGORIES = ["close", "open", "left", "right"]
 score_widgets = []
+
 
 def live(model, camera):
     print("enter here")
@@ -141,6 +151,7 @@ def live(model, camera):
             none()
     time.sleep(1)
 
+
 # execute_thread = threading.Thread(target=live, args=(model, camera))
 # execute_thread.start()
 t_end = datetime.datetime.now() + datetime.timedelta(seconds=300)
@@ -153,6 +164,7 @@ while datetime.datetime.now() < t_end:
 print("live_execution_widget created")
 # ================ Close Camera ============================
 import os
+
 # import IPython
 
 # if type(camera) is CSICamera:

@@ -1,4 +1,12 @@
 # Debugging-101 Notes
+This repository contains all the codes or notes I made during my time working as an iD Tech instructor for the course ML/AI with NVIDIA.
+
+- notes below to install all necessary dependencies and libraries on Windows and Jetson Nano
+- `calculate_acc`: calculating the error rate, or equivalently the accuracy of students' trained model
+- `detectnet`: combining a trained SSD-mobilenet model for fox detection with the pre-trained SSD-mobilenet v2 model to detect foxes, bears and people.
+- `gesture`: adapting the Jupyter Notebook `tab_control.ipynb` to `image-test.py` (work on images) or `camera-test.py` (work on video streams) to perform tab controls on Chrome or keyboard controls in Minecraft. `train.py` modified the `Training and Evaluation` section in `tab_control.ipynb` to allow students train their ResNet18 models in vscode and save all models that have a good performance on both training and validation data (within 3.5% accuracy difference).
+- `OA`: my traumatized Optiver Online Assessment practice
+
 ## Install git on Windows 10
 https://git-scm.com/download/win and restart vscode
 

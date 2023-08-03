@@ -1,7 +1,6 @@
 import argparse
 import sys
 import os
-import re
 
 from jetson_inference import imageNet
 from imagenet import process_images
@@ -26,8 +25,8 @@ except:
 
 # val->type1, type2, type3->image1, image2
 
-images = os.listdir(args.input)
-total = len(images)
+categories = os.listdir(args.input)
+total = 0
 error = 0
 
 def check_output(category, labels):
@@ -36,13 +35,18 @@ def check_output(category, labels):
             return True
     return False
 
-for image in images:
-    image_path = os.path.join(args.input, image)
-    output_path = os.path.join(args.output, "test_{}".format(image))
-    labels = process_images(image_path, output_path)
+for category in categories:
+    category_folder_path = os.path.join(args.input, category)
+    images = os.listdir(category_folder_path)
+    total += len(images)
 
-    if not check_output("cat", labels):
-        error += 1
+    for image in images:
+        image_path = os.path.join(category_folder_path, category, image)
+        output_path = os.path.join(args.output, category, "test_{}".format(image))
+        labels = process_images(image_path, output_path)
+
+        if not check_output(category, labels):
+            error += 1
 
 print("Accuracy: ", (total-error)/total)
     

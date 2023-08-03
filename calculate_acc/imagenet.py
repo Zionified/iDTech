@@ -56,7 +56,7 @@ def process_images(input, output, network="googlenet", topK=1):
         font.OverlayText(img, text=f"{confidence:05.2f}% {classLabel}", 
                         x=5, y=5 + n * (font.GetSize() + 5),
                         color=font.White, background=font.Gray40)
-        classLabels.append(classLabel)   
+        classLabels.append(classLabel)
 
     # render the image
     output.Render(img)
